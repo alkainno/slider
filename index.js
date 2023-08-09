@@ -54,3 +54,32 @@ const currentSlide = (slideIndex) => {
   updateDots();
   updateButtonVisibility();
 };
+let autoLoopIntervalId = null;
+
+const startAutoLoop = () => {
+  const interval = parseInt(document.getElementById("timeInterval").value);
+  autoLoopIntervalId = setInterval(() => {
+    Next();
+  }, interval);
+};
+
+const stopAutoLoop = () => {
+  clearInterval(autoLoopIntervalId);
+};
+
+document
+  .getElementById("autoLoopCheckbox")
+  .addEventListener("change", (event) => {
+    if (event.target.checked) {
+      startAutoLoop();
+    } else {
+      stopAutoLoop();
+    }
+  });
+
+document.getElementById("timeInterval").addEventListener("change", () => {
+  if (document.getElementById("autoLoopCheckbox").checked) {
+    stopAutoLoop();
+    startAutoLoop();
+  }
+});
